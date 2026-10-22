@@ -1,0 +1,9 @@
+{
+  "name": "Checkpoint.Editor",
+  "references": [
+    "Checkpoint.Runtime"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ]
+}

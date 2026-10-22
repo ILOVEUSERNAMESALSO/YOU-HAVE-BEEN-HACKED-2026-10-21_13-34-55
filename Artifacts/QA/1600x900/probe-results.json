@@ -1,0 +1,41 @@
+{
+    "success": true,
+    "resolution": "1600x900",
+    "diagnostics": "Panel attached: True; root: (x:0.00, y:0.00, width:1600.00, height:900.00); button: (x:59.00, y:687.00, width:145.00, height:48.00)",
+    "checks": [
+        "begin-shift is visible within panel",
+        "Title begins shift",
+        "Documents dock inside desk",
+        "Empty query handled",
+        "Unknown query handled",
+        "Decision confirmation preserves player agency",
+        "Cancel leaves decision uncommitted",
+        "Second arrival",
+        "Expired passport detected",
+        "Paired fields reveal conflict",
+        "Source pin retained",
+        "Grandmother overlay active",
+        "Integrity event does not choose a disposition",
+        "AI identity revealed with detection credit",
+        "All five reach shift evaluation",
+        "Evaluation reflects decisions and discoveries",
+        "play-again is visible within panel",
+        "Replay fully resets state",
+        "Missing the attack still reveals AI identity at handoff",
+        "Automatic restoration gives no operator detection credit",
+        "Uninvestigated route also completes without a softlock"
+    ],
+    "errors": [],
+    "captures": [
+        "C:\\Users\\bfong\\OneDrive\\Documents\\My project\\Artifacts\\QA\\1600x900\\00-title.png",
+        "C:\\Users\\bfong\\OneDrive\\Documents\\My project\\Artifacts\\QA\\1600x900\\01-valid-documents.png",
+        "C:\\Users\\bfong\\OneDrive\\Documents\\My project\\Artifacts\\QA\\1600x900\\02-expired-passport.png",
+        "C:\\Users\\bfong\\OneDrive\\Documents\\My project\\Artifacts\\QA\\1600x900\\03-search-results.png",
+        "C:\\Users\\bfong\\OneDrive\\Documents\\My project\\Artifacts\\QA\\1600x900\\04-grandmother.png",
+        "C:\\Users\\bfong\\OneDrive\\Documents\\My project\\Artifacts\\QA\\1600x900\\05-integrity-reveal.png",
+        "C:\\Users\\bfong\\OneDrive\\Documents\\My project\\Artifacts\\QA\\1600x900\\06-restored-identity.png",
+        "C:\\Users\\bfong\\OneDrive\\Documents\\My project\\Artifacts\\QA\\1600x900\\07-protection-evidence.png",
+        "C:\\Users\\bfong\\OneDrive\\Documents\\My project\\Artifacts\\QA\\1600x900\\08-evaluation.png",
+        "C:\\Users\\bfong\\OneDrive\\Documents\\My project\\Artifacts\\QA\\1600x900\\09-large-text.png"
+    ]
+}

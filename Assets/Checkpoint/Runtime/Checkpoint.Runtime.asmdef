@@ -1,0 +1,6 @@
+{
+  "name": "Checkpoint.Runtime",
+  "rootNamespace": "Checkpoint",
+  "references": ["Unity.InputSystem"],
+  "autoReferenced": true
+}
