@@ -23,6 +23,23 @@
 /[Uu]ser[Ss]ettings/
 *.log
 
+# Generated verification reports, screenshots and local test projects
+/[Aa]rtifacts/
+
+# Burst/native debug symbols produced beside player builds
+*_BurstDebugInformation_DoNotShip/
+*_BackUpThisFolder_ButDontShipItWithYourGame/
+
+# Local editor and operating-system files
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Keep Assets (including .meta files), Packages/manifest.json,
+# Packages/packages-lock.json and ProjectSettings in Git.
+# Library/BurstCache is machine-generated and must never be shared.
+
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1
 *.blend1.meta

@@ -4,7 +4,9 @@ A playable Unity desktop prototype about an AI operating an airport checkpoint. 
 
 ## Play
 
-**Existing project version preserved: Unity 6000.5.1f1 (Unity 6.5).** This workspace already used that version; it has not been downgraded to 6.3. Windows Build Support is required only to rebuild the executable.
+**Required editor: Unity 6000.5.1f1 (Unity 6.5)**, recorded in `ProjectSettings/ProjectVersion.txt`. Everyone should use the same version. Windows Build Support is required only to rebuild the executable.
+
+**Windows Burst error 4551:** close this project in Unity, then double-click **OpenUnityWithoutBurst.cmd** in the project folder. It opens the matching editor with Burst disabled for that session. See [the troubleshooting instructions](#windows-burst-error-4551) below.
 
 1. Open this project in Unity Hub with **6000.5.1f1**.
 2. Let scripts and assets import.
@@ -13,7 +15,40 @@ A playable Unity desktop prototype about an AI operating an airport checkpoint. 
 
 The Editor bootstrap creates the scene, camera, runtime UI document, panel settings and build-list entry if missing. Existing template assets and SampleScene are retained.
 
-The verified Windows executable lives at **Builds/Windows/NotJustAcceptButDeny.exe**. Keep the whole Windows folder together. This is a development build; the QA command-line driver is disabled unless explicitly requested.
+Local Windows builds live at **Builds/Windows/NotJustAcceptButDeny.exe**. Builds are ignored by Git and are not included in a clone. To share a playable build, zip the entire **Builds/Windows** folder after building, keeping the executable and its companion files together. This is a development build; the QA command-line driver is disabled unless explicitly requested.
+
+## Get the project from GitHub
+
+Clone with [Git LFS installed](https://git-lfs.com/) so the image files download correctly:
+
+```sh
+git lfs install
+git clone https://github.com/ILOVEUSERNAMESALSO/YOU-HAVE-BEEN-HACKED-2026-10-21_13-34-55.git
+cd YOU-HAVE-BEEN-HACKED-2026-10-21_13-34-55
+git lfs pull
+```
+
+Add that folder to Unity Hub and install **6000.5.1f1**. Let Unity finish restoring packages and importing assets before pressing Play. For an existing clone, close Unity and run `git pull` followed by `git lfs pull` before reopening it. GitHub's **Download ZIP** can contain LFS pointer files instead of images unless the repository owner has [enabled LFS objects in archives](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/managing-git-lfs-objects-in-archives-of-your-repository).
+
+Commit source assets and their `.meta` files, `Packages` (including the lock file), and `ProjectSettings`. Unity regenerates `Library`, `Temp`, `Obj`, `Logs`, IDE project files and local user settings. Build outputs and QA artifacts are also excluded by `.gitignore`.
+
+## Windows Burst error 4551
+
+If the Console reports `System.AggregateException` / `DllNotFoundException` for a DLL under `Library/BurstCache/JIT` with **error code 4551**, Windows Application Control blocked that generated native library. The exception name does not mean the DLL should be downloaded from GitHub. A `.gitignore` change or regenerating the cache does not remove the Windows policy.
+
+1. Close the Unity Editor for this project.
+2. Double-click **OpenUnityWithoutBurst.cmd**. It reads the required Unity version from the project and looks for the standard Unity Hub installation.
+3. Let the import complete, open the desired scene, and press Play.
+
+If Unity is installed in a different location, run this from PowerShell, substituting the matching editor's path:
+
+```powershell
+.\OpenUnityWithoutBurst.cmd 'D:\Unity\6000.5.1f1\Editor\Unity.exe'
+```
+
+The launcher uses Unity's documented [`--burst-disable-compilation` option](https://docs.unity3d.com/Packages/com.unity.burst@1.8/manual/getting-started.html#command-line-options). It avoids Burst-generated native code for that session; normal managed gameplay code still runs. Burst-dependent jobs may run more slowly. Launch this way each time on affected PCs. Opening through Hub normally does not apply the flag.
+
+Alternatively, in an already open editor, turn off **Jobs > Burst > Enable Compilation**. If the error appears during startup, use the launcher. Windows security settings remain unchanged. If Burst acceleration is required on a managed computer, its administrator needs to review the Application Control block.
 
 ## Controls
 
@@ -77,6 +112,7 @@ With this project closed in other Editor instances:
 - Editor: **Window → General → Test Runner → EditMode → Run All**.
 - Build: **Checkpoint → 3. Build Windows prototype**.
 - PowerShell: **.\Tools\Verify.ps1** runs tests, builds Windows and exercises the rendered player at two resolutions. Supply an explicit Editor path with **-UnityPath**.
+- Add **-DisableBurst** to verify the same compatibility mode used by **OpenUnityWithoutBurst.cmd**.
 
 Results go to **Artifacts/QA/editmode-results.xml**. Runtime smoke runs write **probe-results.json** and PNG screenshots beneath **Artifacts/QA/**.
 

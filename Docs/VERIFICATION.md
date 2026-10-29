@@ -1,5 +1,20 @@
 # Verification record
 
+## GitHub sharing and Burst compatibility — 29 October 2026
+
+A fresh project containing only the tracked `Assets`, `Packages` and `ProjectSettings` source files (with the drag-script rename applied) was imported with Unity **6000.5.1f1** and `--burst-disable-compilation`. No existing `Library` cache or untracked TextMesh Pro examples were copied.
+
+- **36 EditMode checks passed, 0 failed:** the existing 33 domain tests plus three temporary checks in the isolated verification copy.
+- Confirmed Burst's runtime `IsEnabled` option was false in the compatibility session.
+- Confirmed `Assets/DragAndDrop.cs` resolves to the `DragAndDrop` component and retains its original GUID.
+- Confirmed SampleScene retains both drag components with no missing MonoBehaviour references.
+- Exercised `OpenUnityWithoutBurst.cmd` with a test executable; the project path and custom editor path containing spaces were handled correctly, and the Burst-disable flag was passed.
+- Verified generated caches/builds/reports are ignored while source assets, metadata and package/version files remain eligible for Git.
+
+Local results: `Artifacts/SharingCheck/Artifacts/QA/editmode-results.xml` and `editmode.log`. Generated artifacts are ignored and are not part of a clone. This validates the compatibility launch mode locally; the affected friend's Windows Application Control policy was not reproduced or changed. A new player build and rendered playthrough were not part of this check.
+
+## Original gameplay verification — 21 October 2026
+
 Date: 21 October 2026. Platform: Windows 11 x64. Editor: Unity 6000.5.1f1, matching the existing workspace.
 
 ## Results

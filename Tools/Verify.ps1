@@ -5,6 +5,7 @@ param(
     [switch]$SkipTests,
     [switch]$SkipBuild,
     [switch]$SkipProbe,
+    [switch]$DisableBurst,
     [string[]]$Resolutions = @('1600x900','1280x720')
 )
 $ErrorActionPreference = 'Stop'
@@ -24,14 +25,18 @@ function Run-CheckedProcess([string]$File, [string[]]$Arguments, [int]$TimeoutSe
 }
 if (-not $SkipTests) {
     Write-Output 'Running EditMode tests...'
-    Run-CheckedProcess $UnityPath @('-batchmode','-nographics','-projectPath',$ProjectPath,'-runTests','-testPlatform','EditMode','-testResults',(Join-Path $qaPath 'editmode-results.xml'),'-logFile',(Join-Path $qaPath 'editmode.log'))
+    $editorArguments = @('-batchmode','-nographics','-projectPath',$ProjectPath,'-runTests','-testPlatform','EditMode','-testResults',(Join-Path $qaPath 'editmode-results.xml'),'-logFile',(Join-Path $qaPath 'editmode.log'))
+    if ($DisableBurst) { $editorArguments += '--burst-disable-compilation' }
+    Run-CheckedProcess $UnityPath $editorArguments
     [xml]$results = Get-Content -LiteralPath (Join-Path $qaPath 'editmode-results.xml')
     if ($results.'test-run'.failed -ne '0' -or [int]$results.'test-run'.total -lt 1) { throw 'EditMode tests failed or were not discovered.' }
     Write-Output "EditMode: $($results.'test-run'.passed) passed."
 }
 if (-not $SkipBuild) {
     Write-Output 'Building Windows player...'
-    Run-CheckedProcess $UnityPath @('-batchmode','-nographics','-quit','-projectPath',$ProjectPath,'-executeMethod','Checkpoint.Editor.CheckpointBootstrap.BuildWindows','-logFile',(Join-Path $qaPath 'build.log'))
+    $editorArguments = @('-batchmode','-nographics','-quit','-projectPath',$ProjectPath,'-executeMethod','Checkpoint.Editor.CheckpointBootstrap.BuildWindows','-logFile',(Join-Path $qaPath 'build.log'))
+    if ($DisableBurst) { $editorArguments += '--burst-disable-compilation' }
+    Run-CheckedProcess $UnityPath $editorArguments
     $sourceBuild = Join-Path $ProjectPath 'Builds\Windows'
     $targetBuild = Join-Path $OutputRoot 'Builds\Windows'
     if ($sourceBuild -ne $targetBuild) {
