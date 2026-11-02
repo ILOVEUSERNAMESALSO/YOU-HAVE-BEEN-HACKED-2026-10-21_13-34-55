@@ -7,17 +7,27 @@ using UnityEngine.EventSystems;
 public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
 {
     private RectTransform rectTransform;
-    private Image image;
+    private CanvasGroup canvasGroup;
     private Vector2 dragStartPosition;
     public RectTransform handoverArea;
     public RectTransform inspectionArea;
-    private Color originalColor;
+    private Canvas canvas;
+    private Outline handoverOutline;
+    private Outline inspectionOutline;
 
     void Start()
     {
+        canvas = GetComponentInParent<Canvas>().rootCanvas;
         rectTransform = GetComponent<RectTransform>();
-        image = GetComponent<Image>();
-        originalColor = image.color;
+        canvasGroup = GetComponent<CanvasGroup>();
+
+        handoverOutline = handoverArea.GetComponent<Outline>();
+        inspectionOutline = inspectionArea.GetComponent<Outline>();
+
+        handoverOutline.enabled = false;
+        inspectionOutline.enabled = false;
+
+        canvasGroup.alpha = 1f;
         rectTransform.localScale = new Vector3(0.6f, 0.6f, 1f);
     }
 
@@ -25,21 +35,39 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     {
         dragStartPosition = rectTransform.anchoredPosition;
         rectTransform.SetAsLastSibling();
-        Color dragColor = originalColor;
-        dragColor.a *= 0.67f;
-        image.color = dragColor;
+
+        canvasGroup.alpha = 0.67f;
+
+        UpdateDropHighlights(eventData);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition += eventData.delta;
-        //transform.position = Input.mousePosition;
+        rectTransform.anchoredPosition +=
+            eventData.delta / canvas.scaleFactor;
+
+        UpdateDropHighlights(eventData);
+    }
+    void UpdateDropHighlights(PointerEventData eventData)
+    {
+        handoverOutline.enabled =
+            RectTransformUtility.RectangleContainsScreenPoint(
+                handoverArea,
+                eventData.position,
+                eventData.pressEventCamera);
+
+        inspectionOutline.enabled =
+            RectTransformUtility.RectangleContainsScreenPoint(
+                inspectionArea,
+                eventData.position,
+                eventData.pressEventCamera);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        image.color = originalColor;
-
+        canvasGroup.alpha = 1f;
+        handoverOutline.enabled = false;
+        inspectionOutline.enabled = false;
         if (handoverArea != null &&
             RectTransformUtility.RectangleContainsScreenPoint(
                 handoverArea,
@@ -60,7 +88,36 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         }
         else
         {
-            rectTransform.anchoredPosition = dragStartPosition;
+            StartCoroutine(ReturnToStart());
+        }
+        IEnumerator ReturnToStart()
+        {
+            Vector2 releasedPosition = rectTransform.anchoredPosition;
+            Vector2 destination = dragStartPosition;
+
+            float duration = 0.2f;
+            float elapsed = 0f;
+
+            // Prevent another pickup during the return animation.
+            canvasGroup.blocksRaycasts = false;
+
+            while (elapsed < duration)
+            {
+                elapsed += Time.unscaledDeltaTime;
+
+                float progress = Mathf.Clamp01(elapsed / duration);
+                float easedProgress = Mathf.SmoothStep(0f, 1f, progress);
+
+                rectTransform.anchoredPosition = Vector2.Lerp(
+                    releasedPosition,
+                    destination,
+                    easedProgress);
+
+                yield return null;
+            }
+
+            rectTransform.anchoredPosition = destination;
+            canvasGroup.blocksRaycasts = true;
         }
     }
     void KeepInsideArea(RectTransform area)
