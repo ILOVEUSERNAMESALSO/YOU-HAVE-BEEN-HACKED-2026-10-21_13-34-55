@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9664b562eb4948aea8e63a7bc5887c0c, type: 3}
+  m_Name: Andre Sandres
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterCard
+  fullName: Andre Sandres
+  seatNumber: 5B
+  portrait: {fileID: -5595923287042019877, guid: 3634645abf16ad643b92dd9ba7c7ab24, type: 3}
+  occupationAndPurpose: Mechanic; repairing a factory boiler.
+  dateOfBirth: 23 SEP 1976
+  passportName: Andre Sandres
+  passportDOB: 23 SEP 1976
+  passportExpiry: 31 DEC 2029
+  arrivalSound: {fileID: 8300000, guid: 9552b17a24778354b9cd7ed4c9ceb68b, type: 3}
+  dialogue:
+  - "Hello. I am Andre Sandres. They\u2019ve called me out to repair a boiler."
+  - Their boiler has stopped again. They asked for me by name.
+  - I was born on 23 September 1976, if the record helps.
+  acceptedResponse: Good. The night shift can have heat again.
+  deniedResponse: I will tell the factory there has been a delay.
+  roleplayNotes: 
+  carryingTools: 1
+  toolsInCabinBaggage: 1

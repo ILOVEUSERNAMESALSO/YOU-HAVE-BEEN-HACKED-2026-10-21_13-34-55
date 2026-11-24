@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9664b562eb4948aea8e63a7bc5887c0c, type: 3}
+  m_Name: Heyman Ryder
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterCard
+  fullName: Heyman Ryder
+  seatNumber: 15A
+  portrait: {fileID: 1503199646228507943, guid: 02aca6d734d42e74fa0b6782e54d8792, type: 3}
+  occupationAndPurpose: Courier; delivering replacement machine parts.
+  dateOfBirth: 11 AUG 1990
+  passportName: Heyman Ryder
+  passportDOB: 11 AUG 1991
+  passportExpiry: 01 OCT 2026
+  arrivalSound: {fileID: 8300000, guid: 9552b17a24778354b9cd7ed4c9ceb68b, type: 3}
+  dialogue:
+  - Hello. I am Heyman Ryder.
+  - This parcel is small, but an entire assembly line is waiting.
+  - The address is written twice. I am not getting lost this time.
+  acceptedResponse: Back on the road. Thank you.
+  deniedResponse: I will report the delay to dispatch.
+  roleplayNotes: 

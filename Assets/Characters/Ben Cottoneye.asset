@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9664b562eb4948aea8e63a7bc5887c0c, type: 3}
+  m_Name: Ben Cottoneye
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterCard
+  fullName: Ben Cottoneye
+  seatNumber: 9D
+  portrait: {fileID: -1648701703399110238, guid: dc6b03a9d4e68154697b067cf6b1b783, type: 3}
+  occupationAndPurpose: Retired carpenter; visiting his grandson.
+  dateOfBirth: 04 FEB 1965
+  passportName: Ben Cottoneye
+  passportDOB: 04 FEB 1965
+  passportExpiry: 15 NOV 2026
+  arrivalSound: {fileID: 8300000, guid: 9552b17a24778354b9cd7ed4c9ceb68b, type: 3}
+  dialogue:
+  - Hello. I am Ben Cottoneye.
+  - My grandson built his first chair. Apparently it has five legs.
+  - I have brought him a proper measuring tape.
+  acceptedResponse: I cannot wait to see what he makes next.
+  deniedResponse: I understand. I should have checked the paperwork.
+  roleplayNotes: 

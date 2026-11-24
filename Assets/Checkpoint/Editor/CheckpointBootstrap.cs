@@ -9,15 +9,10 @@ using UnityEngine.UIElements;
 
 namespace Checkpoint.Editor
 {
-    [InitializeOnLoad]
     public static class CheckpointBootstrap
     {
         public const string ScenePath = "Assets/Checkpoint/Scenes/Checkpoint.unity";
         const string PanelPath = "Assets/Checkpoint/Resources/Checkpoint/CheckpointPanel.asset";
-        static CheckpointBootstrap()
-        {
-            EditorApplication.delayCall += () => { if (!EditorApplication.isPlayingOrWillChangePlaymode) EnsureAssets(); };
-        }
         [MenuItem("Checkpoint/1. Create or repair scene assets")]
         public static void EnsureAssets()
         {
@@ -62,10 +57,8 @@ namespace Checkpoint.Editor
                     EditorSceneManager.CloseScene(scene, true);
                 }
             }
-            var scenes = EditorBuildSettings.scenes.Where(s => s.path != ScenePath).ToList();
-            scenes.Insert(0, new EditorBuildSettingsScene(ScenePath, true));
-            if (!EditorBuildSettings.scenes.Select(s => s.path).SequenceEqual(scenes.Select(s => s.path)))
-                EditorBuildSettings.scenes = scenes.ToArray();
+            // This is the legacy prototype. Its explicit build method supplies
+            // its own scene; never reorder the current game's build settings.
             AssetDatabase.SaveAssets();
         }
         [MenuItem("Checkpoint/2. Open starting scene")]

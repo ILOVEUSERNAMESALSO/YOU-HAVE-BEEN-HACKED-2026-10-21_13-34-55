@@ -1,136 +1,87 @@
 # Not Just Accept, But Deny
 
-A playable Unity desktop prototype about an AI operating an airport checkpoint. Five travelers share one document desk, local investigation terminal, and decision system.
+A Unity airport-checkpoint game about an AI inspecting passengers, questioning them, and consulting a fictional rulebook.
 
-## Play
+## Start here
 
-**Required editor: Unity 6000.5.1f1 (Unity 6.5)**, recorded in `ProjectSettings/ProjectVersion.txt`. Everyone should use the same version. Windows Build Support is required only to rebuild the executable.
-
-**Windows Burst error 4551:** close this project in Unity, then double-click **OpenUnityWithoutBurst.cmd** in the project folder. It opens the matching editor with Burst disabled for that session. See [the troubleshooting instructions](#windows-burst-error-4551) below.
-
-1. Open this project in Unity Hub with **6000.5.1f1**.
-2. Let scripts and assets import.
-3. Open **Assets/Checkpoint/Scenes/Checkpoint.unity**. If absent, choose **Checkpoint → 1. Create or repair scene assets**, then **Checkpoint → 2. Open starting scene**.
-4. Press Unity's **Play** button, then **BEGIN SHIFT**.
-
-The Editor bootstrap creates the scene, camera, runtime UI document, panel settings and build-list entry if missing. Existing template assets and SampleScene are retained.
-
-Local Windows builds live at **Builds/Windows/NotJustAcceptButDeny.exe**. Builds are ignored by Git and are not included in a clone. To share a playable build, zip the entire **Builds/Windows** folder after building, keeping the executable and its companion files together. This is a development build; the QA command-line driver is disabled unless explicitly requested.
-
-## Get the project from GitHub
-
-Clone with [Git LFS installed](https://git-lfs.com/) so the image files download correctly:
+Use **Unity 6000.5.1f1**, exactly as recorded in `ProjectSettings/ProjectVersion.txt`. Install **Git LFS** before cloning. Use a short local path (for example `C:\Projects\checkpoint`) to avoid Windows path-length problems inside Unity's package cache.
 
 ```sh
 git lfs install
-git clone https://github.com/ILOVEUSERNAMESALSO/YOU-HAVE-BEEN-HACKED-2026-10-21_13-34-55.git
-cd YOU-HAVE-BEEN-HACKED-2026-10-21_13-34-55
+git clone https://github.com/ILOVEUSERNAMESALSO/YOU-HAVE-BEEN-HACKED-2026-10-21_13-34-55.git checkpoint
+cd checkpoint
 git lfs pull
 ```
 
-Add that folder to Unity Hub and install **6000.5.1f1**. Let Unity finish restoring packages and importing assets before pressing Play. For an existing clone, close Unity and run `git pull` followed by `git lfs pull` before reopening it. GitHub's **Download ZIP** can contain LFS pointer files instead of images unless the repository owner has [enabled LFS objects in archives](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/managing-git-lfs-objects-in-archives-of-your-repository).
+1. In Unity Hub, add the cloned project folder (the folder containing Assets, Packages, and ProjectSettings).
+2. Open with **6000.5.1f1** and wait for package restoration and asset import.
+3. Open **Assets/Scenes/Intro.unity** and press **Play**.
+4. Continue through the intro; **BEGIN SHIFT** loads **GameIntegration**.
+5. To work directly on the checkpoint, open **Assets/Scenes/GameIntegration.unity** instead.
 
-Commit source assets and their `.meta` files, `Packages` (including the lock file), and `ProjectSettings`. Unity regenerates `Library`, `Temp`, `Obj`, `Logs`, IDE project files and local user settings. Build outputs and QA artifacts are also excluded by `.gitignore`.
+The checked build scenes are **Intro**, then **GameIntegration**. Use **File > Build Profiles** for the current game. The old top-level **Checkpoint** menu and `Tools/Verify.ps1` belong to the legacy prototype, not this version.
 
-## Windows Burst error 4551
+## Optional live passenger chat
 
-If the Console reports `System.AggregateException` / `DllNotFoundException` for a DLL under `Library/BurstCache/JIT` with **error code 4551**, Windows Application Control blocked that generated native library. The exception name does not mean the DLL should be downloaded from GitHub. A `.gitignore` change or regenerating the cache does not remove the Windows policy.
+Document dragging, decisions, arrival audio, and the local searchable rulebook do not require an API key. The interview shows an authored greeting; free-form questions require a personal **Groq** key and internet access.
 
-1. Close the Unity Editor for this project.
-2. Double-click **OpenUnityWithoutBurst.cmd**. It reads the required Unity version from the project and looks for the standard Unity Hub installation.
-3. Let the import complete, open the desired scene, and press Play.
+In Unity, choose **Tools > Checkpoint > Passenger Chat Settings**, enter your key, and select **Save locally**. It is stored in local Editor preferences and is not part of Git. Alternatively, set `GROQ_API_KEY` before launching Unity; it takes precedence. The project does not load `.env` files automatically. Never put a key in a scene, prefab, character card, script, or commit.
 
-If Unity is installed in a different location, run this from PowerShell, substituting the matching editor's path:
+The client uses Groq's chat endpoint; the model is configured on **AIManager** (currently `openai/gpt-oss-20b`). Sending a question transmits fictional passenger context and the conversation to Groq. Missing credentials and connection failures leave the document-inspection loop usable. A public release needs a server-side service; the direct-key client is for local development.
 
-```powershell
-.\OpenUnityWithoutBurst.cmd 'D:\Unity\6000.5.1f1\Editor\Unity.exe'
+## Current controls
+
+- Drag the passport and boarding pass between the handover and inspection areas.
+- The passport opens in inspection and closes in handover. Invalid drops return to their starting position.
+- Ask the passenger questions in the interview panel with **SEND** or Enter.
+- Open the staff computer/rulebook, search by keyword, and select an article. Escape closes the terminal.
+- Stamp **Accept** or **Deny** while the passport is on the inspection desk.
+- Return the stamped passport to handover to finish the visit. The next passenger arrives automatically; the prior result remains visible.
+
+## Where to work
+
+| Location | Purpose |
+|---|---|
+| `Assets/Scenes/Intro.unity` | Current opening sequence |
+| `Assets/Scenes/GameIntegration.unity` | Current playable checkpoint with passenger chat |
+| `Assets/Characters/*.asset` | Passenger identity, portrait, documents, inventory, dialogue, and arrival cue |
+| `Assets/Computer/Staff Database.asset` | Searchable fictional articles and keyword aliases |
+| `Assets/AIChatbot.cs` | Passenger context, requests, cancellation, and typing |
+| `Assets/Decision.cs` / `CharacterCard.cs` | Visit flow and deterministic clearance checks |
+| `Assets/VirtualComputer.cs` | Runtime-generated rulebook UI |
+| `Assets/Music/` | Intro, gameplay, and arrival clips |
+| `Assets/Scenes/Game.unity` | Earlier checkpoint scene; retained for reference |
+| `Assets/Scenes/TheAndrewUnityFile.unity` | Imported reference scene; contains unrelated demo dependencies that are not all included. Do not use as the starting scene. |
+| `Assets/Checkpoint/` | Separate legacy prototype; documentation in `Docs/LEGACY_PROTOTYPE.md` |
+
+## Current work in progress
+
+The evaluator checks name, DOB, expiry, and tools in cabin baggage. Inventory descriptions are supplied to the passenger chatbot. **Authorization references are descriptive only: searchable authorization records and approval exceptions are not implemented yet.** Empty inventory lists mean content has not been authored; fill each card before expecting detailed answers about belongings. Rulebook prose and code checks must be updated together.
+
+The saved project may contain older UI labels or optional features still being developed. Consult the scene and scripts rather than the archived prototype documentation for current behavior.
+
+## Team workflow
+
+Save your Unity scenes before committing. Commit assets and their `.meta` files together; retain package manifests, the package lock file, and ProjectSettings. Never commit Library, Temp, Logs, Builds, local keys, or editor caches.
+
+Before pulling, commit or stash your own changes and close Unity. Then run:
+
+```sh
+git pull --ff-only
+git lfs pull
 ```
 
-The launcher uses Unity's documented [`--burst-disable-compilation` option](https://docs.unity3d.com/Packages/com.unity.burst@1.8/manual/getting-started.html#command-line-options). It avoids Burst-generated native code for that session; normal managed gameplay code still runs. Burst-dependent jobs may run more slowly. Launch this way each time on affected PCs. Opening through Hub normally does not apply the flag.
+Reopen Unity and allow it to import. Coordinate before editing the same `.unity` scene or prefab; separate CharacterCard assets let writers work independently. Move or rename assets inside Unity so their GUIDs are preserved. See [collaboration notes](Docs/COLLABORATION.md).
 
-Alternatively, in an already open editor, turn off **Jobs > Burst > Enable Compilation**. If the error appears during startup, use the launcher. Windows security settings remain unchanged. If Burst acceleration is required on a managed computer, its administrator needs to review the Application Control block.
+## Checks
 
-## Controls
+- With **GameIntegration** open, run **Tools > Checkpoint > Validate Passenger Chat Integration**.
+- Run **Validate Character Cards** and **Validate Computer Database** from the same menu.
+- In Play mode, **Test Passenger Chat Lifecycle** exercises automatic visits and simulated chat failures/cancellation without sending network requests. It advances the queue; stop and restart Play mode afterward.
+- For an isolated fresh-import check, run `Tools/VerifyCurrent.ps1`. It copies source assets and project settings to a temporary folder and runs Unity there, leaving your open project alone. Results are written under ignored `Artifacts/Current/`.
 
-- Click a document tab to open it. Two documents can be open together; opening a third returns the oldest to the tray.
-- Click a field to inspect it. Click another field to compare them. Click the selected field again to clear the selection.
-- Drag a document header to move it. **DOCK LEFT**, **DOCK RIGHT**, and **ARRANGE** provide alternatives without dragging.
-- Scroll within documents, the rulebook, sources, questions, and the evaluation.
-- **Rules / Evidence / Log** switch the left panel. **F1** returns to the rulebook.
-- Terminal tabs select **Search, Government, News, Social, Travel**. Enter a name, passport number, flight, or phrase; **Enter** or **GO** searches.
-- Open a result and select **PIN EVIDENCE** to retain its source and unlock relevant questions.
-- **INTEGRITY CHECK** uses collected provenance. It does not decide whether a traveler should enter.
-- **APPROVE / DENY / SECONDARY REVIEW** open a confirmation form. Add an optional reason and explicitly confirm.
-- **Tab / Shift+Tab** navigate focus; **Enter / Space** activate focused controls. **Escape** closes cancellable dialogs.
-- **TEXT** increases important reading text. **SOUND** toggles generated cues.
-- **RESTART** clears the shift after confirmation. **PLAY AGAIN** restarts from the evaluation.
+Windows players require the matching Windows Build Support module. Generated builds are ignored; share the entire output folder if distributing a local test build.
 
-There is no timer, required dragging, live browser, live AI service, automatic approval, or randomized outcome. The browser is a fictional local archive. Searches operate within the current case.
+## Windows Burst startup issue
 
-## Implemented
-
-- An original UI Toolkit interface: illustrated checkpoint, procedural portraits, paper documents, terminal, rulebook, evidence notebook, dialogue log and explicit decision controls.
-- Five authored cases: valid entry, expired passport, an identity collision, a grandmother role-substitution attack, and a protection dilemma.
-- Date validation, field comparisons, evidence collection, evidence-dependent dialogue and qualified outcomes.
-- Five searchable indexes with source attribution, full records, empty/unknown query handling and evidence pinning.
-- Separate canonical and perceived identities. Integrity restoration changes the portrait and relationship without changing canonical facts.
-- A compulsory AI-role revelation after the grandmother case even if the attack is missed. Automatic handoff restoration earns no detection credit.
-- Structured consequences, citations, preserved rationales and a variable evaluation. No numerical morality score.
-- Atomic local autosave, continue, replay, larger reading text, generated audio cues and keyboard focus.
-- Scene/bootstrap/build tooling, EditMode tests and a rendered development-player smoke driver.
-
-## Architecture
-
-Authored content: **Assets/Checkpoint/Resources/Checkpoint/cases.json**.
-
-| Area | Responsibility |
-|---|---|
-| CaseModels, CaseRepository | Serializable schema and reference validation |
-| DocumentValidator, FakeBrowser | Field checks and deterministic local search |
-| PerceptionManager, PromptInjectionManager | Presentation selection and evidence-based quarantine |
-| ShiftManager | Briefing → Processing → Receipt → next Processing / Evaluation |
-| EvaluationManager, DecisionRecord | Counts, consequences and immutable history snapshots |
-| SaveManager | Versioned JSON, atomic replacement, safe read failure |
-| GameManager | Runtime initialization and generated audio |
-| UIController partials, Checkpoint.uss | Runtime UI Toolkit presentation |
-| CheckpointIllustration | Original vector portrait/airport art |
-| CheckpointBootstrap | Editor asset creation and Windows build |
-| CheckpointTests, RuntimeProbe | Domain tests and real rendered UI event checks |
-
-The UI submits commands to the state machine. Perception never rewrites canonical identity or chooses a disposition. Decision records copy discovered evidence so subsequent cases cannot change history.
-
-Save location: **Application.persistentDataPath/checkpoint-shift-v1.json**. In the Windows build this is normally **%USERPROFILE%/AppData/LocalLow/Merrow Studio/Not Just Accept, But Deny/**. Browser query text, window positions and an unsubmitted rationale are transient. Gameplay state and submitted reasons persist.
-
-## Authoring
-
-See **Docs/AUTHORING.md** for the schema, prerequisite rules and an additional-case workflow. No scene or C# change is required for a normal additional traveler.
-
-## Build and tests
-
-With this project closed in other Editor instances:
-
-- Editor: **Window → General → Test Runner → EditMode → Run All**.
-- Build: **Checkpoint → 3. Build Windows prototype**.
-- PowerShell: **.\Tools\Verify.ps1** runs tests, builds Windows and exercises the rendered player at two resolutions. Supply an explicit Editor path with **-UnityPath**.
-- Add **-DisableBurst** to verify the same compatibility mode used by **OpenUnityWithoutBurst.cmd**.
-
-Results go to **Artifacts/QA/editmode-results.xml**. Runtime smoke runs write **probe-results.json** and PNG screenshots beneath **Artifacts/QA/**.
-
-If the main project is open, verification can use a separate copy of **Assets, Packages and ProjectSettings**. Never run two Editors against the same project directory.
-
-See **Docs/VERIFICATION.md** for actual session results and qualifications.
-
-## Limitations
-
-- One shift, five travelers; approximately 10–20 minutes when investigating and reading. Duration is a design target, not measured with external playtesters.
-- Stylized procedural portraits, text dialogue and simple generated sounds. No voice acting, authored music, full character animation or localization.
-- Deterministic token search over authored local records, not general web search or natural-language reasoning.
-- Evidence and consequences are authored; this does not simulate a complete legal or asylum system.
-- The AI revelation occurs at the fourth traveler within this introductory shift.
-- Keyboard focus, dock controls and larger reading text are included; a full screen-reader audit and arbitrary aspect-ratio support are not claimed. The target is 16:9 desktops.
-- Saves have structural validation but no migration across edited case IDs or future schema versions.
-- No campaign, real exploit, network request, LLM integration, AI escape, economy, elaborate morality system or model-weight mechanic.
-
-## Technical references
-
-The UI uses Unity's [panel scaling](https://docs.unity3d.com/6000.0/Documentation/Manual/UIE-Runtime-Panel-Settings.html) and [Painter2D API](https://docs.unity3d.com/6000.0/Documentation/ScriptReference/UIElements.Painter2D.html). Verification uses Unity's [command-line test runner](https://docs.unity.com/en-us/engine/6000.5/manual/scripting/test-framework-introduction/running-tests/run-tests-from-command-line).
+If your managed Windows machine reports a Burst DLL load failure with error **4551**, close Unity and use **OpenUnityWithoutBurst.cmd** in the project root. It opens the matching editor with Burst compilation disabled for that session. It does not change Windows security settings. See the archived [troubleshooting details](Docs/LEGACY_PROTOTYPE.md#windows-burst-error-4551).

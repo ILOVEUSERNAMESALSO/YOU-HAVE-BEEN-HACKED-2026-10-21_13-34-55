@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9664b562eb4948aea8e63a7bc5887c0c, type: 3}
+  m_Name: Emily Meilida
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterCard
+  fullName: Emily Meilida
+  seatNumber: 11E
+  portrait: {fileID: -923552179749766910, guid: f6d2fc053d2f8664ba01c623f9fcceb6, type: 3}
+  occupationAndPurpose: Botanist; one-day museum visit.
+  dateOfBirth: 18 JUN 1998
+  passportName: Emily Meilida
+  passportDOB: 18 JUN 1998
+  passportExpiry: 16 NOV 2026
+  arrivalSound: {fileID: 8300000, guid: 28d5785877519294cbea29ed1ca4cb0f, type: 3}
+  dialogue:
+  - Hello. I am Emily Meilida.
+  - The museum is opening its winter seed collection today.
+  - I am only staying for the afternoon. My return train is booked.
+  acceptedResponse: Wonderful. I will be back before the last train.
+  deniedResponse: That is disappointing. I will contact the museum.
+  roleplayNotes: 

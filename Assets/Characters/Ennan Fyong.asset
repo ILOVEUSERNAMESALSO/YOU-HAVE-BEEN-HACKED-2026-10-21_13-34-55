@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9664b562eb4948aea8e63a7bc5887c0c, type: 3}
+  m_Name: Ennan Fyong
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterCard
+  fullName: Ennan Fyong
+  seatNumber: 13F
+  portrait: {fileID: 3015509316049634662, guid: d45f5856987c4e9409df741829a13872, type: 3}
+  occupationAndPurpose: Translator; attending a publishing meeting.
+  dateOfBirth: 02 DEC 1983
+  passportName: Ennan Fyong
+  passportDOB: 02 DEC 1983
+  passportExpiry: 02 DEC 2032
+  arrivalSound: {fileID: 8300000, guid: 9552b17a24778354b9cd7ed4c9ceb68b, type: 3}
+  dialogue:
+  - Hello. I am Ennan Fyong.
+  - Three editors have argued over one sentence for a week.
+  - I hope a face-to-face meeting will finally settle it.
+  acceptedResponse: Thank you. Now for the harder negotiation.
+  deniedResponse: I will ask them to meet by telephone instead.
+  roleplayNotes: 

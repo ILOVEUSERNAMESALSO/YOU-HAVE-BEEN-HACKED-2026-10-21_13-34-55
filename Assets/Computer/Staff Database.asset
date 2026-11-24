@@ -1,0 +1,174 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 923d11fba433472c8bee5d08e4314b8b, type: 3}
+  m_Name: Staff Database
+  m_EditorClassIdentifier: Assembly-CSharp::ComputerDatabase
+  entries:
+  - title: Entry requirements
+    category: Rulebook
+    keywords: accept deny valid passport inspection
+    content: 'Accept entry only when all passport checks pass.
+
+
+      1. Compare
+      the passport name with the registration record.
+
+      2. Compare its DOB with
+      the record. The date must be possible and not in the future.
+
+      3. Compare
+      EXP with the inspection date: {DATE}.
+
+
+      Deny entry if any check fails.
+      Return the stamped passport to finish the visit. Feedback explains the result.
+      Ask about baggage and apply any relevant baggage restrictions before granting
+      clearance.'
+  - title: Passport expiry (EXP)
+    category: Rulebook
+    keywords: expired expiration date today valid
+    content: 'Inspection date: {DATE}.
+
+
+      A passport is valid through its printed
+      expiry date. An EXP equal to today is valid. An EXP earlier than today is expired.
+
+
+      Read
+      the month as well as the year. Dates use DD MMM YYYY, for example 16 NOV 2026.
+      An impossible or unreadable date is invalid.'
+  - title: Date of birth (DOB)
+    category: Rulebook
+    keywords: birth birthday age mismatch invalid future
+    content: 'Use the registration record as your reference. The passport DOB must
+      match it exactly as a calendar date.
+
+
+      A different day, month or year
+      is a mismatch. Impossible dates, such as 31 FEB, and dates after the inspection
+      date are invalid.
+
+
+      There is currently no minimum-age entry rule. Do
+      not deny someone merely because they are young or old.'
+  - title: Names and registration records
+    category: Rulebook
+    keywords: identity spelling person passenger name
+    content: 'The registration record identifies the applicant and their recorded
+      date of birth. Compare both with the passport.
+
+
+      Names must match; capitalisation
+      and extra spaces at the ends do not matter. Different letters or missing names
+      are grounds for denial.
+
+
+      The record remains available during dialogue.
+      A friendly story does not override a document discrepancy.'
+  - title: Daily checkpoint notice
+    category: Notices
+    keywords: company bulletin shift policy today
+    content: 'STAFF NOTICE
+
+      Inspection date: {DATE}
+
+
+      Current checks:
+      passport NAME, DOB and EXP.
+
+
+      Read every field before stamping. Multiple
+      discrepancies can occur on the same passport. The system reports all detected
+      discrepancies after the documents are returned.
+
+
+      Keep this terminal
+      available for reference during a visit.'
+  - title: 'Company notice: handling documents'
+    category: Notices
+    keywords: company handover desk papers stamp return
+    content: 'Documents arrive in the handover area. Move the passport onto the inspection
+      desk to open it and read its details.
+
+
+      Stamp Accept or Deny while the
+      passport is in inspection. Return it to the handover area to finish the visit.
+
+
+      Next
+      Person begins another visit with fresh documents. Opening the staff terminal
+      does not finish or reset the current visit.'
+  - title: Boarding pass and seat numbers
+    category: General
+    keywords: seat seating boarding ticket passenger airline
+    content: 'The boarding pass shows the passenger name and assigned seat. Seat
+      codes combine a row number with a letter, such as 9D.
+
+
+      Seats are assigned
+      to the character and remain the same throughout their visit. The pass scales
+      up on the inspection desk for reading.
+
+
+      Seat allocation is informational
+      in the current checkpoint rules. It is not a separate reason to deny entry.'
+  - title: Reading dates
+    category: General
+    keywords: calendar months format jan feb mar apr may jun jul aug sep oct nov
+      dec
+    content: 'Dates are printed as DAY MONTH YEAR.
+
+
+      JAN January / FEB February
+      / MAR March
+
+      APR April / MAY May / JUN June
+
+      JUL July / AUG August
+      / SEP September
+
+      OCT October / NOV November / DEC December
+
+
+      Compare
+      the year first, then the month, then the day. The inspection date appears above
+      the desk and in this database.
+
+
+      February never has 30 or 31 days. A
+      future birth date is invalid.'
+  - title: Using the staff terminal
+    category: General
+    keywords: search database computer help information
+    content: 'Type a word or phrase and click SEARCH, or press Enter. Searches look
+      through article titles, keywords and full text. All words in your query must
+      appear somewhere in a matching article.
+
+
+      Choose All, Rulebook, Notices
+      or General to narrow the results. Use PREV and NEXT for more results, and select
+      a title to read it. Scroll within a long article to read the rest.
+
+
+      CLEAR
+      removes your search text. CLOSE or Escape returns you to the desk. This is
+      the checkpoint internal reference database.'
+  - title: Tools in passenger baggage
+    category: Rulebook
+    keywords: tools toolkit equipment repairs mechanic cabin carry-on checked luggage
+      baggage
+    content: "MERIDIAN CHECKPOINT POLICY \u2014 BAGGAGE  \n\nTools must travel in
+      checked baggage. A passenger carrying tools in cabin baggage must not be cleared
+      through this checkpoint.  \n\nAsk whether the passenger is carrying tools and
+      where they are packed. Their occupation alone does not establish what they
+      are carrying.  \n\nTools in checked baggage do not prevent clearance, provided
+      all other checks pass."

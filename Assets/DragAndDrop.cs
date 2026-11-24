@@ -11,16 +11,21 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
     private Vector2 dragStartPosition;
     public RectTransform handoverArea;
     public RectTransform inspectionArea;
+    public bool CanStamp { get; private set; }
+    private bool couldStampBeforeDrag;
     private Canvas canvas;
     private Outline handoverOutline;
     private Outline inspectionOutline;
+    private Vector2 startingPosition;
+    private PassportVisual passportVisual;
 
     void Start()
     {
+        rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>().rootCanvas;
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
-
+        startingPosition = rectTransform.anchoredPosition;
         handoverOutline = handoverArea.GetComponent<Outline>();
         inspectionOutline = inspectionArea.GetComponent<Outline>();
 
@@ -29,12 +34,34 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
 
         canvasGroup.alpha = 1f;
         rectTransform.localScale = new Vector3(0.6f, 0.6f, 1f);
+        passportVisual = GetComponent<PassportVisual>();
+        passportVisual?.SetOpen(false);
     }
 
+    public void ResetForVisit()
+    {
+        StopAllCoroutines();
+
+        rectTransform.anchoredPosition = startingPosition;
+        rectTransform.localScale = new Vector3(0.6f, 0.6f, 1f);
+        dragStartPosition = startingPosition;
+
+        CanStamp = false;
+        couldStampBeforeDrag = false;
+
+        canvasGroup.alpha = 1f;
+        canvasGroup.blocksRaycasts = true;
+
+        handoverOutline.enabled = false;
+        inspectionOutline.enabled = false;
+        passportVisual?.SetOpen(false);
+    }
     public void OnBeginDrag(PointerEventData eventData)
     {
         dragStartPosition = rectTransform.anchoredPosition;
         rectTransform.SetAsLastSibling();
+        couldStampBeforeDrag = CanStamp;
+        CanStamp = false;
 
         canvasGroup.alpha = 0.67f;
 
@@ -68,6 +95,7 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         canvasGroup.alpha = 1f;
         handoverOutline.enabled = false;
         inspectionOutline.enabled = false;
+
         if (handoverArea != null &&
             RectTransformUtility.RectangleContainsScreenPoint(
                 handoverArea,
@@ -75,7 +103,16 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
                 eventData.pressEventCamera))
         {
             rectTransform.localScale = new Vector3(0.6f, 0.6f, 1f);
+            passportVisual?.SetOpen(false);
             KeepInsideArea(handoverArea);
+            CanStamp = false;
+
+            Decision decision = GetComponent<Decision>();
+
+            if (decision != null)
+            {
+                decision.TryFinishVisit();
+            }
         }
         else if (inspectionArea != null &&
             RectTransformUtility.RectangleContainsScreenPoint(
@@ -84,10 +121,13 @@ public class DragAndDrop : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
                 eventData.pressEventCamera))
         {
             rectTransform.localScale = Vector3.one;
+            passportVisual?.SetOpen(true);
             KeepInsideArea(inspectionArea);
+            CanStamp = true;
         }
         else
         {
+            CanStamp = couldStampBeforeDrag;
             StartCoroutine(ReturnToStart());
         }
         IEnumerator ReturnToStart()

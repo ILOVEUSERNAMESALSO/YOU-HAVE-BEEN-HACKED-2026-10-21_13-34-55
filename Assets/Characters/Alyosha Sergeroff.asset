@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9664b562eb4948aea8e63a7bc5887c0c, type: 3}
+  m_Name: Alyosha Sergeroff
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterCard
+  fullName: Alyosha Sergeroff
+  seatNumber: 3A
+  portrait: {fileID: -2028489416940150474, guid: 2582182da74db5748b5d4e947022f818, type: 3}
+  occupationAndPurpose: Violinist; audition at the concert hall.
+  dateOfBirth: 07 JUL 1994
+  passportName: Airob Bancz
+  passportDOB: 07 JUL 1994
+  passportExpiry: 15 APR 2031
+  arrivalSound: {fileID: 8300000, guid: 9552b17a24778354b9cd7ed4c9ceb68b, type: 3}
+  dialogue:
+  - Hello. I am Alyosha Sergeroff.
+  - The audition begins at noon. I have practiced for months.
+  - My case holds a violin, not anything valuable to customs.
+  acceptedResponse: You may have saved my audition. Thank you.
+  deniedResponse: Then I will have to write to the conductor.
+  roleplayNotes: 

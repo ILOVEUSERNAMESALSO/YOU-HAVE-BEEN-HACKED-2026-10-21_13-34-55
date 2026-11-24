@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9664b562eb4948aea8e63a7bc5887c0c, type: 3}
+  m_Name: Bali Yahomett
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterCard
+  fullName: Bali Yahomett
+  seatNumber: 7C
+  portrait: {fileID: 5250628055752381141, guid: aa2983a67363e3b4aac8905ec564d0a8, type: 3}
+  occupationAndPurpose: Market gardener; delivering seedlings.
+  dateOfBirth: 12 MAR 1988
+  passportName: Bali Yahomett
+  passportDOB: 12 MAR 1988
+  passportExpiry: 30 NOV 2030
+  arrivalSound: {fileID: 8300000, guid: 28d5785877519294cbea29ed1ca4cb0f, type: 3}
+  dialogue:
+  - Hello. I am Bali Yahomett.
+  - These seedlings have survived two train changes.
+  - My sister has a stall at the market. I promised her the first tray.
+  acceptedResponse: Thank you! I will keep the soil off your floor.
+  deniedResponse: I will take them home. I hope they survive the return trip.
+  roleplayNotes: 

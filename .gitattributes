@@ -9,7 +9,7 @@
 # Define macros (only works in top-level gitattributes files)
 [attr]lfs               filter=lfs diff=lfs merge=lfs -text
 [attr]unity-json        eol=lf linguist-language=json
-[attr]unity-yaml        merge=unityyamlmerge eol=lf linguist-language=yaml
+[attr]unity-yaml        merge=unityyamlmerge eol=lf linguist-language=yaml whitespace=-blank-at-eol
 
 # Windows launchers must retain CRLF line endings on every checkout.
 *.cmd                   text eol=crlf
@@ -132,6 +132,7 @@ Packages/packages-lock.json linguist-generated
 *.jpg                   lfs
 *.pict                  lfs
 *.png                   lfs
+*.PNG                   lfs
 *.psd                   lfs
 *.tga                   lfs
 *.tif                   lfs

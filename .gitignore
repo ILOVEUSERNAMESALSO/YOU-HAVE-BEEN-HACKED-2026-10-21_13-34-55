@@ -26,6 +26,13 @@
 # Generated verification reports, screenshots and local test projects
 /[Aa]rtifacts/
 
+# Local service credentials and personal configuration (never shared).
+.env
+.env.*
+!.env.example
+/.local/
+/.codex/
+
 # Burst/native debug symbols produced beside player builds
 *_BurstDebugInformation_DoNotShip/
 *_BackUpThisFolder_ButDontShipItWithYourGame/

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9664b562eb4948aea8e63a7bc5887c0c, type: 3}
+  m_Name: Welesis Pwang
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterCard
+  fullName: Welesis Pwang
+  seatNumber: 21D
+  portrait: {fileID: -7263222403744294476, guid: 425acd84a2b94314cb6199edc6631030, type: 3}
+  occupationAndPurpose: Baker; visiting a flour supplier.
+  dateOfBirth: 16 OCT 1980
+  passportName: Welesis Pwang
+  passportDOB: 16 OCT 1980
+  passportExpiry: 18 JAN 2034
+  arrivalSound: {fileID: 8300000, guid: 28d5785877519294cbea29ed1ca4cb0f, type: 3}
+  dialogue:
+  - Hello. I am Welesis Pwang.
+  - I am comparing mills. Good bread begins long before the oven.
+  - My notebook smells of sourdough. It follows me everywhere.
+  acceptedResponse: Thank you. I hope your lunch is a good one.
+  deniedResponse: I will make another appointment.
+  roleplayNotes: 
